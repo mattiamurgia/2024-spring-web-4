@@ -1,4 +1,4 @@
-package app.springbootproject3web.app;
+package app.springbootproject3web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,6 @@ public class AppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppApplication.class, args);
-		System.out.println("Hello World!");
 	}
 
 }
