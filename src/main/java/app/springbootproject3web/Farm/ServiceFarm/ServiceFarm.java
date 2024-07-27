@@ -33,6 +33,5 @@ public class ServiceFarm {
 
     public void deleteFarm(Farm Farm) {
         repoFarm.delete(Farm);
-
     }
 }

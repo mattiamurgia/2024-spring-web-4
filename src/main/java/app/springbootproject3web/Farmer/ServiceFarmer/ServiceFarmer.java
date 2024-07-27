@@ -28,7 +28,5 @@ public class ServiceFarmer {
 
     public void deleteFarmer(Farmer Farmer) {
         repoFarmer.delete(Farmer);
-
     }
-
 }

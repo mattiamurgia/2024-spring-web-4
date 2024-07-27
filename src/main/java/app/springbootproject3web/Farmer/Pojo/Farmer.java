@@ -1,13 +1,18 @@
 package app.springbootproject3web.Farmer.Pojo;
 
+import java.util.List;
+
 import app.springbootproject3web.Farm.Pojo.Farm;
 import app.springbootproject3web.Farmer.FarmerDTO.FarmerDTO;
+import app.springbootproject3web.Specialization.Pojo.Specialization;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -26,18 +31,22 @@ public class Farmer {
     @Column(length = 128, nullable = false)
     private Integer age;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "farm_id", nullable = false)
     private Farm farm;
+
+    @ManyToMany
+    private List<Specialization> specializations;
 
     public Farmer() {
     }
 
-    public Farmer(String name, String surname, Integer age, Farm farm) {
+    public Farmer(String name, String surname, Integer age, Farm farm, List<Specialization> specializations) {
         setName(name);
         setSurname(surname);
         setAge(age);
         setFarm(farm);
+        setSpecializations(specializations);
     }
 
     public Farmer(FarmerDTO FarmerDTO) {
@@ -84,6 +93,18 @@ public class Farmer {
         this.farm = farm;
     }
 
+    public List<Specialization> getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(List<Specialization> specializations) {
+        this.specializations = specializations;
+    }
+
+    public void addSpecialization(Specialization specialization) {
+        getSpecializations().add(specialization);
+    }
+
     public void updateFarmer(FarmerDTO FarmerDTO) {
         setName(FarmerDTO.getName());
         setSurname(FarmerDTO.getSurname());
@@ -92,8 +113,6 @@ public class Farmer {
 
     @Override
     public String toString() {
-        return "Farmer: " + getName() + " " + getSurname() + ", " + getAge() + " years old, " + " Farm: " + getFarm()
-                + " ID:"
-                + getId();
+        return "Farmer: " + getName() + " " + getSurname() + ", " + getAge() + " years old, " + " Farm: " + getFarm() + " ID:" + getId();
     }
 }

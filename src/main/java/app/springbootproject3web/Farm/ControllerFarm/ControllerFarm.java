@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +20,8 @@ import app.springbootproject3web.Farm.Pojo.Farm;
 import app.springbootproject3web.Farm.ServiceFarm.ServiceFarm;
 
 @RestController
-@RequestMapping("farm")
+@RequestMapping("farms")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ControllerFarm {
 
     @Autowired
@@ -32,14 +35,7 @@ public class ControllerFarm {
 
     @PostMapping("")
     public ResponseEntity<Farm> addFarm(@RequestBody FarmDTO FarmDTO) {
-        Optional<Farm> farmFind = serviceFarm.getFarmById(FarmDTO.getId());
-
-        if (farmFind.isPresent()) {
-            return ResponseEntity.badRequest().build();
-        }
-
         Farm newFarm = new Farm(FarmDTO);
-
         serviceFarm.saveFarm(newFarm);
         return ResponseEntity.ok(newFarm);
     }
@@ -54,9 +50,21 @@ public class ControllerFarm {
 
         Farm newFarm = farmFind.get();
         newFarm.updateFarm(FarmDTO);
-
         serviceFarm.saveFarm(newFarm);
+
         return ResponseEntity.ok(newFarm);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Farm> deleteFarm(@PathVariable int id) {
+        Optional<Farm> farmFind = serviceFarm.getFarmById(id);
+
+        if (farmFind.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        serviceFarm.deleteFarm(farmFind.get());
+        return ResponseEntity.ok().build();
     }
 
 }

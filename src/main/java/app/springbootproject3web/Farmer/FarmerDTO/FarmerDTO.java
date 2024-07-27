@@ -1,21 +1,15 @@
 package app.springbootproject3web.Farmer.FarmerDTO;
 
-public class FarmerDTO {
+import java.util.Arrays;
+import java.util.List;
 
-    private Integer id;
+public class FarmerDTO {
 
     private String name;
     private String surname;
     private Integer age;
     private Integer farmId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private List<Integer> specs;
 
     public String getName() {
         return name;
@@ -49,9 +43,18 @@ public class FarmerDTO {
         this.farmId = farmId;
     }
 
+    public List<Integer> getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(List<Integer> specs) {
+        this.specs = specs;
+    }
+
     @Override
     public String toString() {
-        return "FarmerDTO: " + getName() + " " + getSurname() + ", " + getAge() + " years old, " + " ID:" + getId();
+        return "FarmerDTO: " + getName() + " " + getSurname() + ", " + getAge() + " years old" + " specs: "
+                + Arrays.toString(specs.toArray());
     }
 
 }
